@@ -491,7 +491,9 @@
       for (const t of times) { if (t < mainInfo.cutoff) { const r = st.rows.get(t); if (r) rows.push(r); } }
       if (rows.length) studies[st.key] = { st: rows, turn: st.turn };
     }
-    return { times, series, studies };
+    const startIndex = sess.tsIdx.has(times[0]) ? sess.tsIdx.get(times[0]) : 0;
+    return { times, series, studies, startIndex };
+  }
   }
 
   /** Serializa la vista en frames usando el turn/node ACTUALES (post-reset). */
@@ -505,7 +507,7 @@
       const lbs = item.isMain && S.active ? { bar_close_time: S.T } : (ser && ser.lbs ? ser.lbs : null);
       dict[item.key] = Object.assign({ s: item.s, ns: { d: '', indexes: [] }, t: turn }, node ? { node } : {}, lbs ? { lbs } : {});
     }
-    const tsInfo = { index: 0, zoffset: 0, changes: view.times, marks: [], index_diff: [], last_session_switches: {} };
+    const tsInfo = { index: view.startIndex, zoffset: 0, changes: view.times, marks: [], index_diff: [], last_session_switches: {} };
     // Imitar la secuencia REAL del servidor: series_loading → timescale_update → du → series_completed.
     const frames = [
       JSON.stringify({ m: 'series_loading', p: [sess.id, main.key, main.turn] }),
