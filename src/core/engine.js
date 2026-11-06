@@ -561,15 +561,29 @@
         else console.warn('[TVBT] redeliverAll: sin frames para inyectar (ws=', !!sess.ws, 'frames=', frames && frames.length, ').');
       } catch (e) { S.stats.errors++; console.error('[TVBT] redeliverAll inject:', e); }
       // resetData() suele volver a la vista reciente; scrollear al corte para que se vea el rango filtrado.
+      // resetData() suele volver a la vista reciente; scrollear al corte para que se vea el rango filtrado.
       if (view.times.length) {
-        try {
-          const c = NS.tvapi.chart();
-          if (c && typeof c.setVisibleRange === 'function') {
+        let retries = 5;
+        const tryScroll = () => {
+          try {
+            const c = NS.tvapi.chart();
+            if (!c || typeof c.setVisibleRange !== 'function') return;
+            const vr = c.getVisibleRange();
+            if (!vr) { if (retries-- > 0) setTimeout(tryScroll, 200); return; }
+            
+            // Detectar si el gráfico usa milisegundos
+            const isMs = vr.from > 1e11;
+            const mul = isMs ? 1000 : 1;
             const last = view.times[view.times.length - 1];
             const from = view.times[Math.max(0, view.times.length - 80)];
-            c.setVisibleRange({ from, to: last });
+            const padding = (last - from) * 0.1; // 10% de espacio vacío a la derecha
+            
+            c.setVisibleRange({ from: from * mul, to: (last + padding) * mul }).catch(() => {});
+          } catch (e) {
+            if (retries-- > 0) setTimeout(tryScroll, 200);
           }
-        } catch (e) { /* ignorar */ }
+        };
+        tryScroll();
       }
       setLoading(false);
       emit('state');
