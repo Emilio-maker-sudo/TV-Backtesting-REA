@@ -1,16 +1,5 @@
 # TV Backtester 2.0 — Bar Replay gratis para TradingView
 
-## Instalar
-1. `chrome://extensions` → activar **Modo desarrollador** → **Cargar descomprimida** → elegir la carpeta `tv-backtester`.
-2. Si ya tenías la versión anterior: **quitala** primero, y después **F5 en la pestaña de TradingView** (el hook tiene que cargarse antes que TradingView).
-
-## Usar
-- Botón **Backtest** (tijera) en la barra superior, al lado de *Replay*.
-- Click → el cursor pasa a ser una tijera y todo lo que quedaría cortado se atenúa. Click en la vela → corte.
-- Panel: `−10 −1 ▶/⏸ +1 +10`, velocidad (0.5x–50x), timeframe actual, modo estricto, elegir otra vela, salir.
-- Teclado: `→ ←` (±1), `Shift + → ←` (±10), `Espacio` (play/pausa), `Esc` (cancela la tijera).
-- Cambiar el timeframe con el selector normal de TradingView mantiene el punto de corte.
-
 ## Cómo funciona (por qué no es un overlay)
 TradingView recibe las velas por WebSocket (`timescale_update` / `du`). `hook.js` reemplaza `WebSocket`
 antes de que cargue TradingView y `engine.js` filtra ese flujo: **las velas futuras nunca llegan al gráfico**.
