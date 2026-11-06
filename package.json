@@ -1,0 +1,8 @@
+{
+  "name": "tv-backtester",
+  "private": true,
+  "scripts": {
+    "test": "node tests/sim.test.js && node tests/edge.test.js && node tests/ui.test.js"
+  },
+  "devDependencies": { "jsdom": "^26.0.0" }
+}

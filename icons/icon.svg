@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="20" fill="#1e222d"/>
+  <rect x="8" y="8" width="112" height="112" rx="16" fill="#2a2e39" stroke="#363a45" stroke-width="2"/>
+  <!-- Chart bars -->
+  <rect x="20" y="70" width="8" height="30" rx="2" fill="#ef5350"/>
+  <rect x="34" y="55" width="8" height="45" rx="2" fill="#4caf50"/>
+  <rect x="48" y="60" width="8" height="40" rx="2" fill="#4caf50"/>
+  <rect x="62" y="45" width="8" height="55" rx="2" fill="#ef5350"/>
+  <rect x="76" y="50" width="8" height="50" rx="2" fill="#4caf50"/>
+  <!-- Cut line -->
+  <line x1="88" y1="30" x2="88" y2="108" stroke="#2196F3" stroke-width="2" stroke-dasharray="4,3"/>
+  <!-- Hidden bars (dimmed) -->
+  <rect x="92" y="55" width="8" height="45" rx="2" fill="#363a45" opacity="0.3"/>
+  <rect x="106" y="65" width="8" height="35" rx="2" fill="#363a45" opacity="0.3"/>
+  <!-- Play button -->
+  <polygon points="94,38 108,46 94,54" fill="#2196F3"/>
+</svg>

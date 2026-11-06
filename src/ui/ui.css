@@ -1,0 +1,73 @@
+/* TV Backtester · ui.css — tema claro/oscuro vía [data-tvbt-theme] */
+.tvbt-ui, .tvbt-ui * { box-sizing: border-box; }
+.tvbt-ui {
+  --bg: #ffffff; --fg: #131722; --muted: #787b86; --line: #e0e3eb; --hover: #f0f3fa;
+  --accent: #2962ff; --danger: #f23645; --ok: #089981;
+  font: 500 12px/1 -apple-system, BlinkMacSystemFont, "Trebuchet MS", Roboto, Ubuntu, sans-serif;
+  color: var(--fg);
+}
+.tvbt-ui[data-tvbt-theme="dark"] {
+  --bg: #1e222d; --fg: #d1d4dc; --muted: #868993; --line: #363a45; --hover: #2a2e39;
+}
+
+/* ───── panel de control ───── */
+#tvbt-panel {
+  position: fixed; z-index: 2147483000; left: 50%; bottom: 70px; transform: translateX(-50%);
+  display: none; align-items: center; gap: 4px; padding: 5px 8px 5px 4px;
+  background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.28); user-select: none; -webkit-user-select: none;
+}
+#tvbt-panel.tvbt-show { display: flex; }
+#tvbt-panel .tvbt-grip { width: 16px; align-self: stretch; display: flex; align-items: center; justify-content: center; cursor: grab; color: var(--muted); letter-spacing: -2px; font-size: 13px; }
+#tvbt-panel .tvbt-grip:active { cursor: grabbing; }
+#tvbt-panel .tvbt-sep { width: 1px; height: 22px; background: var(--line); margin: 0 4px; }
+#tvbt-panel .tvbt-info { display: flex; flex-direction: column; gap: 4px; min-width: 118px; padding: 0 4px; }
+#tvbt-panel .tvbt-info .tvbt-row1 { display: flex; align-items: center; gap: 6px; }
+#tvbt-panel .tvbt-tf { background: var(--accent); color: #fff; border-radius: 4px; padding: 3px 6px; font-weight: 700; font-size: 11px; }
+#tvbt-panel .tvbt-time { font-variant-numeric: tabular-nums; font-weight: 600; }
+#tvbt-panel .tvbt-rem { color: var(--muted); font-size: 11px; }
+#tvbt-panel button {
+  appearance: none; border: 0; background: transparent; color: var(--fg); cursor: pointer;
+  height: 30px; min-width: 32px; padding: 0 7px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; gap: 3px;
+  font: 700 12px/1 inherit; font-family: inherit;
+}
+#tvbt-panel button:hover:not(:disabled) { background: var(--hover); }
+#tvbt-panel button:active:not(:disabled) { transform: translateY(1px); }
+#tvbt-panel button:disabled { opacity: .35; cursor: default; }
+#tvbt-panel button svg { width: 16px; height: 16px; flex: none; }
+#tvbt-panel button.tvbt-play { background: var(--accent); color: #fff; min-width: 38px; }
+#tvbt-panel button.tvbt-play:hover:not(:disabled) { background: #1e53e5; }
+#tvbt-panel button.tvbt-on { color: var(--accent); background: var(--hover); }
+#tvbt-panel button.tvbt-close:hover:not(:disabled) { color: var(--danger); }
+#tvbt-panel select {
+  height: 30px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--fg);
+  font: 600 12px/1 inherit; font-family: inherit; padding: 0 4px; cursor: pointer; outline: none;
+}
+#tvbt-panel .tvbt-spin { display: none; width: 12px; height: 12px; border: 2px solid var(--line); border-top-color: var(--accent); border-radius: 50%; animation: tvbtspin .7s linear infinite; }
+#tvbt-panel.tvbt-busy .tvbt-spin { display: inline-block; }
+@keyframes tvbtspin { to { transform: rotate(360deg); } }
+
+/* ───── selección con tijera ───── */
+#tvbt-veil { position: fixed; z-index: 2147482990; pointer-events: none; display: none; opacity: .62; }
+#tvbt-cutline { position: fixed; z-index: 2147482991; pointer-events: none; display: none; width: 0; border-left: 1.5px dashed var(--accent, #2962ff); }
+#tvbt-badge {
+  position: fixed; z-index: 2147482992; pointer-events: none; display: none; align-items: center; gap: 6px;
+  background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.25); font-weight: 600; white-space: nowrap;
+}
+#tvbt-badge svg { width: 14px; height: 14px; color: var(--accent); }
+
+/* ───── botón en la barra superior de TradingView ───── */
+#tvbt-toolbar-btn.tvbt-on, #tvbt-toolbar-btn.tvbt-on button { color: #2962ff !important; }
+#tvbt-toolbar-btn svg { color: inherit; }
+#tvbt-float {
+  position: fixed; z-index: 2147483000; top: 8px; left: 70px; display: flex; align-items: center; gap: 6px;
+  padding: 6px 10px; cursor: pointer; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--fg);
+}
+#tvbt-float.tvbt-on { color: var(--accent); }
+#tvbt-float svg { width: 16px; height: 16px; }
+
+/* ───── avisos ───── */
+#tvbt-toasts { position: fixed; z-index: 2147483001; left: 50%; bottom: 128px; transform: translateX(-50%); display: flex; flex-direction: column; gap: 6px; align-items: center; pointer-events: none; }
+.tvbt-toast { background: var(--bg); color: var(--fg); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 6px; padding: 9px 12px; box-shadow: 0 4px 16px rgba(0,0,0,.3); max-width: 420px; line-height: 1.35; }
+.tvbt-toast.tvbt-error { border-left-color: var(--danger); }

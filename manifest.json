@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "TV Backtester",
+  "version": "2.2.0",
+  "description": "Bar replay gratuito para TradingView: corta el gráfico en una vela, avanza/retrocede vela por vela y reproduce a la velocidad que quieras. Las velas futuras se eliminan del flujo de datos, no se tapan.",
+  "icons": { "16": "icons/icon16.png", "48": "icons/icon48.png", "128": "icons/icon128.png" },
+  "content_scripts": [
+    {
+      "matches": ["https://*.tradingview.com/chart/*", "https://*.tradingview.com/*/chart/*"],
+      "js": [
+        "src/core/protocol.js",
+        "src/core/engine.js",
+        "src/core/tvapi.js",
+        "src/core/hook.js",
+        "src/ui/ui.js",
+        "src/main.js"
+      ],
+      "css": ["src/ui/ui.css"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ]
+}
